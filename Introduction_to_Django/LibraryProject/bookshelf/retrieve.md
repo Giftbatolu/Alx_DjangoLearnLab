@@ -6,12 +6,11 @@
 from bookshelf.models import Book
 
 # Retrieve all books
-books = Book.objects.all()
-for b in books:
-    print(b.id, b.title, b.author, b.publication_year)
+books = Book.objects.get(title=1984)
+print(f"{book.title} by {book.author} published in year {book.publication_year}")
 ```
 
 ## Expexted Output
 ```python
-1 1984 George Orwell 1949
+1984 by George Orwell published in year 1949
 ```
