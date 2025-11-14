@@ -15,7 +15,7 @@ class Book(models.Model):
 
 class Library(models.Model):
     name = models.CharField(max_lenght=250)
-    books = models.ManyToManyField(Book, on_delete=models.CASCADE, related_name='library')
+    books = models.ManyToManyField(Book, related_name='library')
 
     def __str__(self):
         return self.name
