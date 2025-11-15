@@ -8,7 +8,7 @@ def list_books(request):
     context = {'book_list': books}
     return render(request, 'list_books.html', context)
 
-# Detail view for Library
+# Detail view for Librarys
 class LibraryDetailView(DetailView):
     model = Library
     template_name = 'library_detail.html'
