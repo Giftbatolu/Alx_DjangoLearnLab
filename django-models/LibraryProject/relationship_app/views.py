@@ -1,8 +1,9 @@
-from django.shortcuts import render
-from relationship_app.models import Book
-from .models import Library
+from django.shortcuts import render, redirect
+from .models import Library, Book
 from django.views.generic.detail import DetailView
-from django.views.generic import DetailView
+from django.contrib.auth import login, logout
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.decorators import login_required
 
 # View to list all books
 def list_books(request):
@@ -20,3 +21,33 @@ class LibraryDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['books'] = self.object.books.all()
         return context
+
+# User registration view
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('relationship_app/login.html')
+    else:
+        form = UserCreationForm()
+    return render(request, 'relationship_app/register.html', {'form': form})
+
+# User login view
+def user_login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('list_books')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'relationship_app/login.html', {'form': form})
+
+# User logout view
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect('relationship_app/login.html')
