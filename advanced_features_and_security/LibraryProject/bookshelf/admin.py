@@ -14,7 +14,7 @@ class BookAdmin(admin.ModelAdmin):
     # Fields searchable from the search bar at the top
     search_fields = ('title', 'author')
 
-class UserAdmin(BaseUserAdmin):
+class CustomUserAdmin(BaseUserAdmin):
     list_display = ('username', 'email', 'date_of_birth', 'is_staff', 'is_active')
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
     fieldsets = (
@@ -31,4 +31,4 @@ class UserAdmin(BaseUserAdmin):
     search_fields = ('username', 'email')
     ordering = ('username', 'email')
 
-admin.site.register(CustomUser, UserAdmin)
+admin.site.register(CustomUser, CustomUserAdmin)
